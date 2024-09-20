@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">DeadOrAlive</string>
+    <string name="main_screen_title">Клеточное наполнение</string>
+    <string name="button_text">СОТВОРИТЬ</string>
+
+    <string name="card_dead_first">Мёртвая</string>
+    <string name="card_dead_second">или прикидывается</string>
+
+    <string name="card_alive_first">Живая</string>
+    <string name="card_alive_second">и шевелится!</string>
+
+    <string name="card_life_first">Жизнь</string>
+    <string name="card_life_second">Ку-ку!</string>
+
+</resources>
