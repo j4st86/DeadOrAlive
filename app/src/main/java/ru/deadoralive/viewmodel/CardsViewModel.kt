@@ -2,6 +2,8 @@ package ru.deadoralive.viewmodel
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import ru.deadoralive.data.CellData
 
 class CardsViewModel : ViewModel() {
@@ -12,32 +14,33 @@ class CardsViewModel : ViewModel() {
     private var lifeCellIndex: Int? = null
 
     fun addCell() {
+        viewModelScope.launch {
+            val isAlive = (0..1).random() == 1
 
-        val isAlive = (0..1).random() == 1
-
-        val newCell = if (isAlive) {
-            continuousAliveCellsCount++
-            continuousDeadCellsCount = 0
-
-            if (continuousAliveCellsCount == 3) {
-                continuousAliveCellsCount = 0
+            val newCell = if (isAlive) {
+                continuousAliveCellsCount++
                 continuousDeadCellsCount = 0
-                lifeCellIndex = cells.size
-                CellData(isAlive = true, isLife = true)
+
+                if (continuousAliveCellsCount == 3) {
+                    continuousAliveCellsCount = 0
+                    continuousDeadCellsCount = 0
+                    lifeCellIndex = cells.size
+                    CellData(isAlive = true, isLife = true)
+                } else {
+                    CellData(isAlive = true)
+                }
             } else {
-                CellData(isAlive = true)
-            }
-        } else {
-            continuousDeadCellsCount++
-            continuousAliveCellsCount = 0
+                continuousDeadCellsCount++
+                continuousAliveCellsCount = 0
 
-            if (lifeCellIndex != null && continuousDeadCellsCount == 3) {
-                cells.removeAt(lifeCellIndex!!)
-                lifeCellIndex = null
-                continuousDeadCellsCount = 0
+                if (lifeCellIndex != null && continuousDeadCellsCount == 3) {
+                    cells.removeAt(lifeCellIndex!!)
+                    lifeCellIndex = null
+                    continuousDeadCellsCount = 0
+                }
+                CellData(isAlive = false)
             }
-            CellData(isAlive = false)
+            cells.add(newCell)
         }
-        cells.add(newCell)
     }
 }
