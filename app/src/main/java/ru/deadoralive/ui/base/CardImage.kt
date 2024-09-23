@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import ru.deadoralive.data.CellData
@@ -16,6 +17,7 @@ import ru.deadoralive.extensions.getCellImage
 import ru.deadoralive.extensions.getCellImageBgColor
 import ru.deadoralive.ui.theme.DeadOrAliveTheme
 import ru.deadoralive.ui.theme.imageBoxSize
+import ru.deadoralive.ui.theme.imageFitScale
 
 @Composable
 fun CardImage(cell: CellData) {
@@ -33,6 +35,7 @@ fun CardImage(cell: CellData) {
             contentDescription = "Cell Image",
             modifier = Modifier
                 .fillMaxSize()
+                .scale(imageFitScale)
         )
     }
 }
@@ -41,6 +44,6 @@ fun CardImage(cell: CellData) {
 @Composable
 fun CardImagePreview() {
     DeadOrAliveTheme {
-        CardImage(cell = CellData(isAlive = true))
+        CardImage(cell = CellData(isAlive = true, isLife = true))
     }
 }
